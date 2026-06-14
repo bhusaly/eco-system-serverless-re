@@ -1,6 +1,9 @@
 import React from "react";
 
+// hero section for the home page
+
 const HeroSection: React.FC = () => {
+  
   return (
     <div className="flex flex-col md:flex-row items-start md:items-center justify-between px-10 pt-14 pb-8 max-w-5xl mx-auto">
       <h1 className="text-4xl font-extrabold text-gray-900 leading-tight">

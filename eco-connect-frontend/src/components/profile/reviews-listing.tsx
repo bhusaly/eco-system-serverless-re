@@ -1,6 +1,7 @@
 import React from "react";
 import { Pencil, Trash2 } from "lucide-react";
 
+// type defiing
 export interface ProfileReview {
   reviewId: string;
   businessName: string;
@@ -18,6 +19,7 @@ const ReviewListing: React.FC<ReviewListingProps> = ({
   onEdit,
   onDelete,
 }) => {
+  // state handaling 
   if (reviews.length === 0) {
     return (
       <p className="text-sm text-gray-400 px-8">

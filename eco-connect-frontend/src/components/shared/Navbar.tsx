@@ -39,7 +39,6 @@ export const Navbar: React.FC = () => {
       <Container>
         <div className="flex items-center justify-between py-2">
 
-          {/* LOGO */}
           <div
             onClick={() => nav("/")}
             className="text-xl font-semibold text-green-600 cursor-pointer"
@@ -47,7 +46,6 @@ export const Navbar: React.FC = () => {
             EcoConnect
           </div>
 
-          {/* RIGHT SIDE */}
           <div className="flex items-center gap-3">
             {loggedin === true ? (
               <>
@@ -63,7 +61,6 @@ export const Navbar: React.FC = () => {
                 Sign In
               </Button>
             ) : (
-              // null = still checking auth, show neutral placeholder
               <div className="text-sm text-gray-400">...</div>
             )}
           </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "../shared/Card";
 import { Button } from "../shared/Button";
 
-
+// type for business
 interface Business {
   id: string;
   name: string;
@@ -18,6 +18,8 @@ interface BusinessCardProps {
   onClick: (business: Business) => void;
 }
 
+//Type safety
+
 const BusinessCard: React.FC<BusinessCardProps> = ({ business, onClick }) => {
   return (
     <Card
@@ -29,6 +31,7 @@ const BusinessCard: React.FC<BusinessCardProps> = ({ business, onClick }) => {
       variant="default"
       className="cursor-pointer"
     >
+      {/* button pointing to single detail business */}
       <Button
         variant="info"
         className="w-full"

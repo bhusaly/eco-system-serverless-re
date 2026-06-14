@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/shared/Button";
 
-
+// mode type safety
 type Mode = "login" | "signup" | "confirm";
 
 const Auth = () => {
@@ -15,7 +15,6 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const nav = useNavigate();
 
-  // ── LOGIN ────────────────────────────────────────────────────────────────
   const handleLogin = async () => {
     try {
       setLoading(true);
@@ -31,7 +30,6 @@ const Auth = () => {
     }
   };
 
-  // ── SIGNUP ───────────────────────────────────────────────────────────────
   const handleSignup = async () => {
     try {
       setLoading(true);
@@ -48,7 +46,6 @@ const Auth = () => {
     }
   };
 
-  // ── CONFIRM ──────────────────────────────────────────────────────────────
   const handleConfirm = async () => {
     try {
       setLoading(true);
@@ -61,7 +58,6 @@ const Auth = () => {
     }
   };
 
-  // ── AUTH CHECK (uncomment to redirect already-logged-in users) ───────────
   // useEffect(() => {
   //   const checkUser = async () => {
   //     try {
@@ -77,7 +73,7 @@ const Auth = () => {
       <div className="bg-white rounded-2xl shadow-md p-8 w-full max-w-sm border border-gray-100">
 
         
-
+{/* Login mode form */}
         {mode === "login" && (
           <>
             <h2 className="text-xl font-bold text-center text-gray-800 mb-6">Login</h2>
@@ -111,7 +107,7 @@ const Auth = () => {
             </p>
           </>
         )}
-
+{/* Sign up mode form */}
         {mode === "signup" && (
           <>
             <h2 className="text-xl font-bold text-center text-gray-800 mb-6">Register</h2>
@@ -148,7 +144,7 @@ const Auth = () => {
             </p>
           </>
         )}
-
+{/* email confirmation modal */}
         {mode === "confirm" && (
           <>
             <h2 className="text-xl font-bold text-center text-gray-800 mb-2">Confirm Email</h2>

@@ -3,12 +3,14 @@ import { X } from "lucide-react";
 import { Button } from "../shared/Button";
 import type { ProfileReview } from "./reviews-listing";
 
+// type defining
 interface EditReviewModalProps {
   review: ProfileReview;
   onClose: () => void;
   onSubmit: (reviewId: string, comment: string) => Promise<void>;
 }
 
+// edit review modal 
 const EditReviewModal: React.FC<EditReviewModalProps> = ({
   review,
   onClose,
@@ -31,8 +33,7 @@ const EditReviewModal: React.FC<EditReviewModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm relative">
-
-        {/* Close */}
+{/* form  */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"

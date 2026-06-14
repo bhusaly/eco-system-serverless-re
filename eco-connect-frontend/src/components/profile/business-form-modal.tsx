@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import type { ProfileBusiness } from "./business-listing";
 import { Button } from "../shared/Button";
 
+// interface definig
 interface BusinessModalProps {
   onClose: () => void;
   onSubmit: (data: { name: string; category: string; description: string }) => Promise<void>;
@@ -11,12 +12,12 @@ interface BusinessModalProps {
 
 const BusinessModal: React.FC<BusinessModalProps> = ({ onClose, onSubmit, existing }) => {
   const isEdit = !!existing;
-
+// states for business add 
   const [name, setName]               = useState(existing?.name || "");
   const [category, setCategory]       = useState(existing?.category || "");
   const [description, setDescription] = useState(existing?.description || "");
   const [loading, setLoading]         = useState(false);
-
+// submit function
   const handleSubmit = async () => {
     if (!name.trim() || !description.trim()) return;
     try {
@@ -32,14 +33,13 @@ const BusinessModal: React.FC<BusinessModalProps> = ({ onClose, onSubmit, existi
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm relative">
 
-        {/* Close */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
         >
           <X size={18} />
         </button>
-
+{/* state handing based on add r edit  */}
         <h2 className="text-xl font-bold text-center text-gray-800 mb-6">
           {isEdit ? "Edit Business" : "Add Business"}
         </h2>

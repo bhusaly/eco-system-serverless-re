@@ -5,6 +5,7 @@ import HeroSection from "../components/home-business-listing/hero";
 const Home = () => {
   return (
     <div className="min-h-screen bg-white">
+      {/* importing components */}
       <HeroSection />
       <BusinessListing />
     </div>

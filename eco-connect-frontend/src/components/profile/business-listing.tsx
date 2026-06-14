@@ -3,6 +3,8 @@ import { Pencil, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../shared/Button";
 
+// type defining 
+
 export interface ProfileBusiness {
   businessId: string;
   name: string;
@@ -22,7 +24,7 @@ const BusinessListing: React.FC<BusinessListingProps> = ({
   onDelete,
 }) => {
   const nav = useNavigate();
-
+// state handling 
   if (businesses.length === 0) {
     return (
       <p className="text-sm text-gray-400 px-8">
@@ -30,15 +32,15 @@ const BusinessListing: React.FC<BusinessListingProps> = ({
       </p>
     );
   }
-
+// business listing
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 px-8">
       {businesses.map((biz) => (
+        // single business card
         <div
           key={biz.businessId}
           className="border border-gray-200 rounded-2xl p-5 bg-white hover:shadow-md transition-shadow duration-150"
         >
-          {/* Title row */}
           <div className="flex items-start justify-between mb-2">
             <h3 className="text-sm font-bold text-gray-900">{biz.name}</h3>
             <div className="flex gap-2 ml-2 shrink-0">

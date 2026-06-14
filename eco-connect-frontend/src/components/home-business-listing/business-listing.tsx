@@ -16,7 +16,7 @@ interface Business {
   [key: string]: any;
 }
 
-// ─── Dummy data (remove when API is live) ────────────────────────────────────
+// dummy dat
 const DUMMY_BUSINESSES: Business[] = [
   {
     id: "1",
@@ -73,7 +73,6 @@ const DUMMY_BUSINESSES: Business[] = [
     location: "Hobart, TAS",
   },
 ];
-// ─────────────────────────────────────────────────────────────────────────────
 
 const BusinessListing: React.FC = () => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
@@ -89,16 +88,12 @@ const BusinessListing: React.FC = () => {
       try {
         setLoading(true);
 
-        // ── LIVE API (uncomment when ready) ──────────────────────────────────
         // const res = await axios.get(API_URL);
         // setBusinesses(res.data || []);
         // setFiltered(res.data || []);
-        // ─────────────────────────────────────────────────────────────────────
 
-        // ── Dummy data (remove when API is live) ──────────────────────────────
         setBusinesses(DUMMY_BUSINESSES);
         setFiltered(DUMMY_BUSINESSES);
-        // ─────────────────────────────────────────────────────────────────────
       } catch (err: any) {
         setError(err.message || "Something went wrong");
       } finally {
@@ -146,8 +141,8 @@ const BusinessListing: React.FC = () => {
           />
         </div>
       </div>
+      {/* Api state handling for loading, error and empty */}
 
-      {/* Loading state */}
       {loading && (
         <div className="flex flex-col items-center justify-center py-16 text-gray-500 gap-3">
           <div className="w-9 h-9 border-4 border-gray-200 border-t-green-600 rounded-full animate-spin" />
@@ -155,21 +150,18 @@ const BusinessListing: React.FC = () => {
         </div>
       )}
 
-      {/* Error state */}
       {!loading && error && (
         <div className="text-center py-16 text-red-400 text-sm">
           {error}
         </div>
       )}
 
-      {/* Empty state */}
       {!loading && !error && filtered.length === 0 && (
         <div className="text-center py-16 text-gray-400 text-sm">
           No matching businesses found.
         </div>
       )}
 
-      {/* Business grid */}
       {!loading && !error && filtered.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filtered.map((biz) => (

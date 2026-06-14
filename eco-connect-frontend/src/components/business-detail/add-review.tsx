@@ -6,6 +6,8 @@ interface AddReviewProps {
 }
 
 const AddReview: React.FC<AddReviewProps> = ({ onSubmit }) => {
+
+  // States for the comment of review and loading for api handling
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
 

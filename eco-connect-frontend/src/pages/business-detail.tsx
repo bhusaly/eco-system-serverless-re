@@ -18,7 +18,6 @@ interface Business {
   location?: string;
 }
 
-// ── Dummy data (remove when API is live) ─────────────────────────────────────
 const DUMMY_BUSINESS: Business = {
   businessId: "biz-001",
   name: "Green Grocer Co.",
@@ -48,7 +47,6 @@ const DUMMY_REVIEWS: Review[] = [
       "Absolutely love this place! The produce is always fresh and the staff is incredibly knowledgeable about sustainable farming. Highly recommend!",
   },
 ];
-// ─────────────────────────────────────────────────────────────────────────────
 
 const BusinessDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -58,25 +56,20 @@ const BusinessDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // ── FETCH BUSINESS ────────────────────────────────────────────────────────
   useEffect(() => {
     const fetchBusiness = async () => {
       try {
         setLoading(true);
 
-        // ── LIVE API (uncomment when ready) ────────────────────────────────
         // const [bizRes, reviewRes] = await Promise.all([
         //   axios.get(`${API_URL}/${businessId}`),
         //   axios.get(`${REVIEW_URL}/${businessId}`),
         // ]);
         // setBusiness(bizRes.data);
         // setReviews(reviewRes.data || []);
-        // ──────────────────────────────────────────────────────────────────
 
-        // ── Dummy data (remove when API is live) ───────────────────────────
         setBusiness(DUMMY_BUSINESS);
         setReviews(DUMMY_REVIEWS);
-        // ──────────────────────────────────────────────────────────────────
       } catch (err: any) {
         setError(err.message || "Failed to load business");
       } finally {
@@ -87,10 +80,8 @@ const BusinessDetail = () => {
     if (id) fetchBusiness();
   }, [id]);
 
-  // ── SUBMIT REVIEW ─────────────────────────────────────────────────────────
   const handleAddReview = async (comment: string) => {
     try {
-      // ── LIVE API (uncomment when ready) ──────────────────────────────────
       // const session = await fetchAuthSession();
       // const token = session.tokens?.idToken?.toString();
       // await axios.post(REVIEW_URL, {
@@ -101,22 +92,18 @@ const BusinessDetail = () => {
       // });
       // const reviewRes = await axios.get(`${REVIEW_URL}/${businessId}`);
       // setReviews(reviewRes.data || []);
-      // ──────────────────────────────────────────────────────────────────────
 
-      // ── Dummy: optimistically append (remove when API is live) ────────────
       const newReview: Review = {
         id: `r-${Date.now()}`,
         email: "you@example.com",
         comment,
       };
       setReviews((prev) => [newReview, ...prev]);
-      // ──────────────────────────────────────────────────────────────────────
     } catch (err: any) {
       alert(err.message || "Failed to submit review");
     }
   };
-
-  // ── RENDER ────────────────────────────────────────────────────────────────
+// state handaling
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-3 text-gray-400">
@@ -136,6 +123,7 @@ const BusinessDetail = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      {/*  using componented  */}
       <BusinessHeader name={business.name} description={business.description} />
       <hr className="border-gray-100 max-w-2xl mx-auto mb-8" />
       <ReviewList reviews={reviews} />

@@ -4,7 +4,7 @@ interface BusinessHeaderProps {
   name: string;
   description: string;
 }
-
+// business header card 
 const BusinessHeader: React.FC<BusinessHeaderProps> = ({ name, description }) => {
   return (
     <div className="text-center py-10 px-6 max-w-2xl mx-auto">

@@ -10,6 +10,7 @@ interface ReviewListProps {
   reviews: Review[];
 }
 
+// reviews list
 const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
   return (
     <div className="max-w-2xl mx-auto px-6 mb-10">
@@ -20,6 +21,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
       )}
 
       <div className="flex flex-col gap-3">
+        {/* individual review card */}
         {reviews.map((review) => (
           <div
             key={review.id}
