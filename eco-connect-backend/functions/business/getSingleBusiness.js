@@ -29,13 +29,13 @@ export const handler = async (event) => {
     const [businessResult, reviewsResult] = await Promise.all([
       dynamo.send(
         new GetCommand({
-          TableName: "Businesses",
+          TableName: "business",
           Key: { businessId },
         })
       ),
       dynamo.send(
         new QueryCommand({
-          TableName: "Reviews",
+          TableName: "reviews",
           KeyConditionExpression: "businessId = :id",
           ExpressionAttributeValues: { ":id": businessId },
         })
