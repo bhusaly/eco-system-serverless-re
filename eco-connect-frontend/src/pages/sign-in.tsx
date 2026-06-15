@@ -1,10 +1,10 @@
-import { useState } from "react";
-// import { signIn, signUp, confirmSignUp, fetchAuthSession, getCurrentUser } from "aws-amplify/auth";
-// import "../aws-config";
+import { useState, useEffect } from "react";
+import { signIn, signUp, confirmSignUp, fetchAuthSession, getCurrentUser } from "aws-amplify/auth";
+import "../aws-config";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/shared/Button";
 
-// mode type safety
+// Defines the three stages of the auth flow
 type Mode = "login" | "signup" | "confirm";
 
 const Auth = () => {
@@ -15,14 +15,29 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const nav = useNavigate();
 
+  // Redirects already authenticated users away from the login page to home
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        await getCurrentUser();
+        nav("/");
+      } catch {
+        // No active session, stay on login page
+      }
+    };
+    checkUser();
+  }, []);
+
+  // Signs the user in with Cognito using email and password,
   const handleLogin = async () => {
     try {
       setLoading(true);
-      // await signIn({ username: email, password });
-      // const session = await fetchAuthSession();
-      // const token = session.tokens?.idToken?.toString();
-      // console.log("TOKEN:", token);
-      nav("/");
+      await signIn({ username: email, password });
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+      console.log("TOKEN:", token);
+      // Redirecting to the user profile
+      nav("/profile");
     } catch (error: any) {
       alert(error.message || "Login failed");
     } finally {
@@ -30,14 +45,15 @@ const Auth = () => {
     }
   };
 
+  // Registers a new user in the Cognito User Pool with email and password,
   const handleSignup = async () => {
     try {
       setLoading(true);
-      // await signUp({
-      //   username: email,
-      //   password,
-      //   options: { userAttributes: { email } },
-      // });
+      await signUp({
+        username: email,
+        password,
+        options: { userAttributes: { email } },
+      });
       setMode("confirm");
     } catch (error: any) {
       alert(error.message || "Signup failed");
@@ -46,10 +62,11 @@ const Auth = () => {
     }
   };
 
+
   const handleConfirm = async () => {
     try {
       setLoading(true);
-      // await confirmSignUp({ username: email, confirmationCode: code });
+      await confirmSignUp({ username: email, confirmationCode: code });
       setMode("login");
     } catch (error: any) {
       alert(error.message || "Confirmation failed");
@@ -58,22 +75,11 @@ const Auth = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const checkUser = async () => {
-  //     try {
-  //       await getCurrentUser();
-  //       nav("/");
-  //     } catch {}
-  //   };
-  //   checkUser();
-  // }, []);
-
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="bg-white rounded-2xl shadow-md p-8 w-full max-w-sm border border-gray-100">
 
-        
-{/* Login mode form */}
+        {/* Login mode form */}
         {mode === "login" && (
           <>
             <h2 className="text-xl font-bold text-center text-gray-800 mb-6">Login</h2>
@@ -107,7 +113,8 @@ const Auth = () => {
             </p>
           </>
         )}
-{/* Sign up mode form */}
+
+        {/* Sign up mode form */}
         {mode === "signup" && (
           <>
             <h2 className="text-xl font-bold text-center text-gray-800 mb-6">Register</h2>
@@ -133,7 +140,7 @@ const Auth = () => {
             />
 
             <Button variant="info" className="w-full py-3 text-base" onClick={handleSignup}>
-              {loading ? "Please wait..." : "Enter"}
+              {loading ? "Please wait..." : "Sign Up"}
             </Button>
 
             <p className="text-xs text-center text-gray-400 mt-5">
@@ -144,10 +151,14 @@ const Auth = () => {
             </p>
           </>
         )}
-{/* email confirmation modal */}
+
+        {/* Email confirmation step — Cognito sends a 6-digit code to the user's email */}
         {mode === "confirm" && (
           <>
             <h2 className="text-xl font-bold text-center text-gray-800 mb-2">Confirm Email</h2>
+            <p className="text-xs text-gray-400 text-center mb-6">
+              Check your email for a verification code
+            </p>
 
             <input
               type="text"
