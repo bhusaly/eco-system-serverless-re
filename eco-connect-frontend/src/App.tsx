@@ -8,7 +8,7 @@ import Profile from "./pages/profile";
 
 function App() {
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+    <div className="min-h-screen bg-white">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

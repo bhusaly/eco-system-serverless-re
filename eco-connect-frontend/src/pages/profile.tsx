@@ -132,7 +132,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] pb-16">
+    <div className="min-h-screen bg-white pb-16">
 
       <ProfileHeader
         email={email}

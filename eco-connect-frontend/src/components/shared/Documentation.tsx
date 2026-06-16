@@ -75,7 +75,7 @@ const DocSection: React.FC<{
 
 export const DocumentationPortal: React.FC = () => {
   return (
-    <div className="min-h-screen bg-[var(--bg)] pb-20 selection:bg-indigo-100">
+    <div className="min-h-screen bg-white pb-20 selection:bg-indigo-100">
       
      <Container className="mt-20">
         <header className="mb-24">
