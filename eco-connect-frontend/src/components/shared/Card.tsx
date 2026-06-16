@@ -16,15 +16,15 @@ export const Card: React.FC<CardProps> = ({
   variant = "default",  
 }) => {
   const variants = {
-    default: "bg-white border-green-100",
-    soft: "bg-green-50 border-green-100",
+    default: "bg-white border-indigo-100",
+    soft: "bg-indigo-50 border-indigo-100",
   };
 
   return (
     <div
       className={`
         group rounded-3xl border shadow-sm
-        hover:shadow-lg hover:shadow-green-100/50 transition-all duration-300
+        hover:shadow-lg hover:shadow-indigo-100/50 transition-all duration-300
         overflow-hidden ${variants[variant]} ${className}
       `}
     >

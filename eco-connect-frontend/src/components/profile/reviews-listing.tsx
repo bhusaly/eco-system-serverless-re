@@ -5,6 +5,7 @@ import { Pencil, Trash2 } from "lucide-react";
 export interface ProfileReview {
   reviewId: string;
   businessName: string;
+  businesId: string;
   comment: string;
 }
 
@@ -36,7 +37,8 @@ const ReviewListing: React.FC<ReviewListingProps> = ({
           className="border border-gray-200 rounded-2xl px-6 py-5 bg-white hover:shadow-md transition-shadow duration-150"
         >
           <div className="flex items-start justify-between mb-2">
-            <h3 className="text-sm font-bold text-gray-900">{review.businessName}</h3>
+          <p className="text-xs text-gray-500 leading-relaxed">{review.comment}</p>
+
             <div className="flex gap-2 ml-2 shrink-0">
               <button
                 onClick={() => onEdit(review)}
@@ -52,7 +54,6 @@ const ReviewListing: React.FC<ReviewListingProps> = ({
               </button>
             </div>
           </div>
-          <p className="text-xs text-gray-500 leading-relaxed">{review.comment}</p>
         </div>
       ))}
     </div>

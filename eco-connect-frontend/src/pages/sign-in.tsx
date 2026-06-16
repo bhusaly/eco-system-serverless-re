@@ -90,7 +90,7 @@ const Auth = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full mb-3 px-4 py-2.5 border border-gray-200 rounded-xl text-sm
-                         focus:outline-none focus:ring-2 focus:ring-green-400 bg-gray-50"
+                         focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50"
             />
             <input
               type="password"
@@ -98,7 +98,7 @@ const Auth = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full mb-6 px-4 py-2.5 border border-gray-200 rounded-xl text-sm
-                         focus:outline-none focus:ring-2 focus:ring-green-400 bg-gray-50"
+                         focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50"
             />
 
             <Button variant="info" className="w-full py-3 text-base" onClick={handleLogin}>
@@ -107,7 +107,7 @@ const Auth = () => {
 
             <p className="text-xs text-center text-gray-400 mt-5">
               Do not have an account?{" "}
-              <span className="text-green-600 underline cursor-pointer font-medium" onClick={() => setMode("signup")}>
+              <span className="text-indigo-600 underline cursor-pointer font-medium" onClick={() => setMode("signup")}>
                 Sign up
               </span>
             </p>
@@ -126,7 +126,7 @@ const Auth = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full mb-4 px-4 py-2.5 border border-gray-200 rounded-xl text-sm
-                         focus:outline-none focus:ring-2 focus:ring-green-400 bg-gray-50"
+                         focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50"
             />
 
             <label className="block text-sm text-gray-600 mb-1 font-medium">Password:</label>
@@ -136,7 +136,7 @@ const Auth = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full mb-6 px-4 py-2.5 border border-gray-200 rounded-xl text-sm
-                         focus:outline-none focus:ring-2 focus:ring-green-400 bg-gray-50"
+                         focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50"
             />
 
             <Button variant="info" className="w-full py-3 text-base" onClick={handleSignup}>
@@ -145,7 +145,7 @@ const Auth = () => {
 
             <p className="text-xs text-center text-gray-400 mt-5">
               Already have an account?{" "}
-              <span className="text-green-600 underline cursor-pointer font-medium" onClick={() => setMode("login")}>
+              <span className="text-indigo-600 underline cursor-pointer font-medium" onClick={() => setMode("login")}>
                 Login
               </span>
             </p>
@@ -166,7 +166,7 @@ const Auth = () => {
               value={code}
               onChange={(e) => setCode(e.target.value)}
               className="w-full mb-6 px-4 py-2.5 border border-gray-200 rounded-xl text-sm
-                         focus:outline-none focus:ring-2 focus:ring-green-400 bg-gray-50"
+                         focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50"
             />
 
             <Button variant="info" className="w-full py-3 text-base" onClick={handleConfirm}>
@@ -175,7 +175,7 @@ const Auth = () => {
 
             <p className="text-xs text-center text-gray-400 mt-5">
               Back to{" "}
-              <span className="text-green-600 underline cursor-pointer font-medium" onClick={() => setMode("login")}>
+              <span className="text-indigo-600 underline cursor-pointer font-medium" onClick={() => setMode("login")}>
                 Login
               </span>
             </p>

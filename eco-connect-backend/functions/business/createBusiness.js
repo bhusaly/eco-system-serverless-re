@@ -6,8 +6,8 @@ const dynamo = DynamoDBDocumentClient.from(client);
 
 export const handler = async (event) => {
   try {
-    const userId = event.requestContext?.authorizer?.jwt?.claims?.sub;
 
+const userId = event.requestContext?.authorizer?.claims?.sub;
     // Reject the request if no valid user id present
     if (!userId) {
       return {

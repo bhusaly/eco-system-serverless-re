@@ -2,7 +2,7 @@ import React from "react";
 
 export interface Review {
   id: string;
-  email: string;
+  userEmail: string;
   comment: string;
 }
 
@@ -27,7 +27,7 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
             key={review.id}
             className="border border-gray-200 rounded-xl px-5 py-4"
           >
-            <p className="text-sm font-semibold text-gray-800 mb-1">{review.email}</p>
+            <p className="text-sm font-semibold text-gray-800 mb-1">{review?.userEmail}</p>
             <p className="text-xs text-gray-500 leading-relaxed">{review.comment}</p>
           </div>
         ))}

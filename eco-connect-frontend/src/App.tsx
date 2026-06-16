@@ -8,7 +8,7 @@ import Profile from "./pages/profile";
 
 function App() {
   return (
-    <>
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -16,7 +16,7 @@ function App() {
         <Route path="/business/:id" element={<BusinessDetail />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

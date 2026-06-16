@@ -1,78 +1,17 @@
 import React, { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Search } from "lucide-react";
-import BusinessCard from "./business-car";
+import BusinessCard from "./business-card";
+import { BASE_URL } from "../../aws-config";
 
-// const API_URL = "https://85z743ntte.execute-api.us-east-1.amazonaws.com/business";
-
-interface Business {
-  id: string;
+export interface Business {
+  businessId: string;
   name: string;
   description: string;
-  businessId: string;
   category?: string;
-  location?: string;
   [key: string]: any;
 }
-
-// dummy dat
-const DUMMY_BUSINESSES: Business[] = [
-  {
-    id: "1",
-    businessId: "biz-001",
-    name: "Green Grocer Co.",
-    description:
-      "Locally sourced organic produce delivered fresh to your door. Supporting sustainable farming.",
-    category: "Food & Grocery",
-    location: "Melbourne, VIC",
-  },
-  {
-    id: "2",
-    businessId: "biz-002",
-    name: "SolarNest",
-    description:
-      "Residential and commercial solar panel installation. Helping homes go 100% renewable.",
-    category: "Energy",
-    location: "Sydney, NSW",
-  },
-  {
-    id: "3",
-    businessId: "biz-003",
-    name: "EcoThreads",
-    description:
-      "Sustainable fashion made from recycled materials. Ethical supply chains, zero fast fashion.",
-    category: "Fashion",
-    location: "Brisbane, QLD",
-  },
-  {
-    id: "4",
-    businessId: "biz-004",
-    name: "ReRoot Nursery",
-    description:
-      "Native plant nursery promoting biodiversity. Expert advice on eco-friendly gardening.",
-    category: "Garden",
-    location: "Perth, WA",
-  },
-  {
-    id: "5",
-    businessId: "biz-005",
-    name: "CleanRide EV",
-    description:
-      "Electric vehicle rentals and charging infrastructure. Zero-emission transport for the city.",
-    category: "Transport",
-    location: "Adelaide, SA",
-  },
-  {
-    id: "6",
-    businessId: "biz-006",
-    name: "Wholesome Bulk",
-    description:
-      "Package-free bulk food store. Bring your own containers and reduce plastic waste every shop.",
-    category: "Food & Grocery",
-    location: "Hobart, TAS",
-  },
-];
 
 const BusinessListing: React.FC = () => {
   const [businesses, setBusinesses] = useState<Business[]>([]);
@@ -81,19 +20,16 @@ const BusinessListing: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // const nav = useNavigate();
+  const nav = useNavigate();
 
+  // fetches all businesses from the API on page load
   useEffect(() => {
     const fetchBusinesses = async () => {
       try {
         setLoading(true);
-
-        // const res = await axios.get(API_URL);
-        // setBusinesses(res.data || []);
-        // setFiltered(res.data || []);
-
-        setBusinesses(DUMMY_BUSINESSES);
-        setFiltered(DUMMY_BUSINESSES);
+        const res = await axios.get(`${BASE_URL}/business`);
+        setBusinesses(res.data || []);
+        setFiltered(res.data || []);
       } catch (err: any) {
         setError(err.message || "Something went wrong");
       } finally {
@@ -104,7 +40,7 @@ const BusinessListing: React.FC = () => {
     fetchBusinesses();
   }, []);
 
-  // Search filter
+  // filters businesses by name, description or category as user types
   useEffect(() => {
     if (!search.trim()) {
       setFiltered(businesses);
@@ -120,13 +56,14 @@ const BusinessListing: React.FC = () => {
     setFiltered(result);
   }, [search, businesses]);
 
+  // navigates to the business detail page when a card is clicked
   const handleCardClick = (business: Business) => {
-    // nav(`/business/${business.businessId}`);
-    console.log("Navigate to:", business.businessId);
+    nav(`/business/${business.businessId}`);
   };
 
   return (
     <div className="max-w-5xl mx-auto px-6 pb-16">
+
       {/* Search bar */}
       <div className="flex justify-center mb-8">
         <div className="relative w-full max-w-2xl">
@@ -136,43 +73,45 @@ const BusinessListing: React.FC = () => {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search Businesses..."
             className="w-full pl-11 pr-5 py-3 border border-gray-200 rounded-full
-                       shadow-md focus:outline-none focus:ring-2 focus:ring-green-500
+                       shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500
                        text-sm text-gray-700 bg-white"
           />
         </div>
       </div>
-      {/* Api state handling for loading, error and empty */}
 
+      {/* Loading state */}
       {loading && (
         <div className="flex flex-col items-center justify-center py-16 text-gray-500 gap-3">
-          <div className="w-9 h-9 border-4 border-gray-200 border-t-green-600 rounded-full animate-spin" />
+          <div className="w-9 h-9 border-4 border-gray-200 border-t-indigo-600 rounded-full animate-spin" />
           <p className="text-sm">Loading businesses...</p>
         </div>
       )}
 
+      {/* Error state */}
       {!loading && error && (
-        <div className="text-center py-16 text-red-400 text-sm">
-          {error}
-        </div>
+        <div className="text-center py-16 text-red-400 text-sm">{error}</div>
       )}
 
+      {/* Empty state */}
       {!loading && !error && filtered.length === 0 && (
         <div className="text-center py-16 text-gray-400 text-sm">
           No matching businesses found.
         </div>
       )}
 
+      {/* Business grid */}
       {!loading && !error && filtered.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filtered.map((biz) => (
             <BusinessCard
-              key={biz.businessId || biz.id}
+              key={biz.businessId}
               business={biz}
               onClick={handleCardClick}
             />
           ))}
         </div>
       )}
+
     </div>
   );
 };

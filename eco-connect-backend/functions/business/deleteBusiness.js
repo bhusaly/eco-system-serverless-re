@@ -7,7 +7,7 @@ const dynamo = DynamoDBDocumentClient.from(client);
 export const handler = async (event) => {
   try {
     // get user id from cognito token
-    const userId = event.requestContext?.authorizer?.jwt?.claims?.sub;
+const userId = event.requestContext?.authorizer?.claims?.sub;
 
     // no token, block the request
     if (!userId) {

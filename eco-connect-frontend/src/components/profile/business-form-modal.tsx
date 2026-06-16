@@ -50,7 +50,7 @@ const BusinessModal: React.FC<BusinessModalProps> = ({ onClose, onSubmit, existi
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="w-full mb-3 px-4 py-2.5 border border-gray-200 rounded-xl text-sm
-                     focus:outline-none focus:ring-2 focus:ring-green-400 bg-gray-50"
+                     focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50"
         />
         <input
           type="text"
@@ -58,7 +58,7 @@ const BusinessModal: React.FC<BusinessModalProps> = ({ onClose, onSubmit, existi
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           className="w-full mb-3 px-4 py-2.5 border border-gray-200 rounded-xl text-sm
-                     focus:outline-none focus:ring-2 focus:ring-green-400 bg-gray-50"
+                     focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50"
         />
         <textarea
           placeholder="Description"
@@ -66,7 +66,7 @@ const BusinessModal: React.FC<BusinessModalProps> = ({ onClose, onSubmit, existi
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
           className="w-full mb-6 px-4 py-2.5 border border-gray-200 rounded-xl text-sm
-                     focus:outline-none focus:ring-2 focus:ring-green-400 bg-gray-50 resize-none"
+                     focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50 resize-none"
         />
 
         <Button variant="info" className="w-full py-3 text-base" onClick={handleSubmit}>

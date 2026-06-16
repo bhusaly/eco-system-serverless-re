@@ -8,3 +8,6 @@ Amplify.configure({
     },
   },
 });
+
+export const BASE_URL = "https://pphgcl2s0f.execute-api.us-east-1.amazonaws.com/dev"
+

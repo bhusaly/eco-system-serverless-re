@@ -5,7 +5,7 @@ const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
 export const handler = async (event) => {
-  const userId = event.requestContext?.authorizer?.jwt?.claims?.sub;
+const userId = event.requestContext?.authorizer?.claims?.sub;
 
   // no token, tell frontend to redirect to login
   if (!userId) {

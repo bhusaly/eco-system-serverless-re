@@ -35,13 +35,13 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-green-100">
+    <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-indigo-100">
       <Container>
         <div className="flex items-center justify-between py-2">
 
           <div
             onClick={() => nav("/")}
-            className="text-xl font-semibold text-green-600 cursor-pointer"
+            className="text-xl font-semibold text-indigo-600 cursor-pointer"
           >
             EcoConnect
           </div>

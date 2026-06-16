@@ -50,11 +50,11 @@ export const AsymmetricHero: React.FC = () => {
                   <div className="flex gap-1.5 p-3">
                     <div className="w-2.5 h-2.5 rounded-full bg-rose-500" />
                     <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-indigo-500" />
                   </div>
                   <div className="p-6 pt-0 font-mono text-sm space-y-2">
                     <p className="text-indigo-400">const <span className="text-white">Student</span> = {"{"}</p>
-                    <p className="pl-4 text-slate-400">skills: [<span className="text-emerald-400">'React', 'Tailwind', 'TS'</span>],</p>
+                    <p className="pl-4 text-slate-400">skills: [<span className="text-indigo-300">'React', 'Tailwind', 'TS'</span>],</p>
                     <p className="pl-4 text-slate-400">passion: <span className="text-amber-400">Infinity</span></p>
                     <p className="text-indigo-400">{"}"}</p>
                   </div>
@@ -63,7 +63,7 @@ export const AsymmetricHero: React.FC = () => {
                {/* Floating Badge */}
                <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border border-slate-50 animate-bounce">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-bold">✓</div>
+                    <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-bold">✓</div>
                     <div>
                       <p className="text-xs text-slate-400 font-bold uppercase">Status</p>
                       <p className="text-sm font-bold text-slate-900">Course Completed</p>

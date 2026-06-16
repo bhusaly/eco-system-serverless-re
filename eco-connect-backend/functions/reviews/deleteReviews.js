@@ -6,7 +6,7 @@ const dynamo = DynamoDBDocumentClient.from(client);
 
 export const handler = async (event) => {
   // get user id from cognito token
-  const userId = event.requestContext?.authorizer?.jwt?.claims?.sub;
+const userId = event.requestContext?.authorizer?.claims?.sub;
 
   // no token, block the request
   if (!userId) {
@@ -42,7 +42,7 @@ export const handler = async (event) => {
     const existing = await dynamo.send(
       new GetCommand({
         TableName: "reviews",
-        Key: { businessId, reviewId },
+        Key: { businesId: businessId, reviewId },
       })
     );
 
@@ -76,7 +76,7 @@ export const handler = async (event) => {
     await dynamo.send(
       new DeleteCommand({
         TableName: "reviews",
-        Key: { businessId, reviewId },
+        Key: { businesId: businessId, reviewId },
       })
     );
 

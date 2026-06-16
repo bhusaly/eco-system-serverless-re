@@ -1,24 +1,14 @@
 import React from "react";
 import { Card } from "../shared/Card";
 import { Button } from "../shared/Button";
+import type { Business } from "./business-listing";
 
-// type for business
-interface Business {
-  id: string;
-  name: string;
-  description: string;
-  businessId: string;
-  category?: string;
-  location?: string;
-  [key: string]: any;
-}
-
+// type define
 interface BusinessCardProps {
   business: Business;
   onClick: (business: Business) => void;
 }
 
-//Type safety
 
 const BusinessCard: React.FC<BusinessCardProps> = ({ business, onClick }) => {
   return (

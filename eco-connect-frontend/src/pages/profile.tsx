@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-// import axios from "axios";
-// import { getCurrentUser, fetchAuthSession } from "aws-amplify/auth";
+import axios from "axios";
+import { getCurrentUser, fetchAuthSession } from "aws-amplify/auth";
 import { useNavigate } from "react-router-dom";
 import type { ProfileBusiness } from "../components/profile/business-listing";
 import type { ProfileReview } from "../components/profile/reviews-listing";
@@ -9,64 +9,46 @@ import BusinessListing from "../components/profile/business-listing";
 import ReviewListing from "../components/profile/reviews-listing";
 import BusinessModal from "../components/profile/business-form-modal";
 import EditReviewModal from "../components/profile/edit-review-modal";
-
-
-// const BIZ_API   = "https://85z743ntte.execute-api.us-east-1.amazonaws.com/business";
-// const REV_API   = "https://85z743ntte.execute-api.us-east-1.amazonaws.com/review";
-
-const DUMMY_EMAIL = "example@gmail.com";
-
-const DUMMY_BUSINESSES: ProfileBusiness[] = [
-  { businessId: "biz-001", name: "Green Grocer Co.", description: "Locally sourced organic produce delivered fresh to your door. Supporting sustainable farming.", category: "Food" },
-  { businessId: "biz-002", name: "SolarNest",        description: "Locally sourced organic produce delivered fresh to your door. Supporting sustainable farming.", category: "Energy" },
-  { businessId: "biz-003", name: "EcoThreads",       description: "Locally sourced organic produce delivered fresh to your door. Supporting sustainable farming.", category: "Fashion" },
-  { businessId: "biz-004", name: "ReRoot Nursery",   description: "Locally sourced organic produce delivered fresh to your door. Supporting sustainable farming.", category: "Garden" },
-  { businessId: "biz-005", name: "CleanRide EV",     description: "Locally sourced organic produce delivered fresh to your door. Supporting sustainable farming.", category: "Transport" },
-  { businessId: "biz-006", name: "Wholesome Bulk",   description: "Locally sourced organic produce delivered fresh to your door. Supporting sustainable farming.", category: "Food" },
-];
-
-const DUMMY_REVIEWS: ProfileReview[] = [
-  { reviewId: "rev-001", businessName: "Sarah Johnson", comment: "Absolutely love this place! The produce is always fresh and the staff is incredibly knowledgeable about sustainable farming. Highly recommend!" },
-  { reviewId: "rev-002", businessName: "Green Grocer Co.", comment: "Great service and amazing organic produce. Will definitely come back!" },
-];
+import { BASE_URL } from "../aws-config";
 
 type Tab = "business" | "reviews";
 
 const Profile = () => {
-  const [email, setEmail]             = useState("");
-  const [businesses, setBusinesses]   = useState<ProfileBusiness[]>([]);
-  const [reviews, setReviews]         = useState<ProfileReview[]>([]);
-  const [tab, setTab]                 = useState<Tab>("business");
-  const [loading, setLoading]         = useState(true);
+  const [email, setEmail] = useState("");
+  const [businesses, setBusinesses] = useState<ProfileBusiness[]>([]);
+  const [reviews, setReviews] = useState<ProfileReview[]>([]);
+  const [tab, setTab] = useState<Tab>("business");
+  const [loading, setLoading] = useState(true);
 
-  // Modal state
-  const [showAddBiz, setShowAddBiz]           = useState(false);
+  // modal state
+  const [showAddBiz, setShowAddBiz] = useState(false);
   const [editingBusiness, setEditingBusiness] = useState<ProfileBusiness | null>(null);
-  const [editingReview, setEditingReview]     = useState<ProfileReview | null>(null);
+  const [editingReview, setEditingReview] = useState<ProfileReview | null>(null);
 
   const nav = useNavigate();
 
+  // fetches the logged in user's businesses and reviews on page load
   useEffect(() => {
     const fetchProfile = async () => {
       try {
         setLoading(true);
 
-        // const user = await getCurrentUser();
-        // const session = await fetchAuthSession();
-        // const token = session.tokens?.idToken?.toString();
-        // const headers = { Authorization: `Bearer ${token}` };
-        // const [bizRes, revRes] = await Promise.all([
-        //   axios.get(`${BIZ_API}/user/${user.userId}`, { headers }),
-        //   axios.get(`${REV_API}/user/${user.userId}`, { headers }),
-        // ]);
-        // setEmail(user.signInDetails?.loginId || "");
-        // setBusinesses(bizRes.data || []);
-        // setReviews(revRes.data || []);
+        // get current user and their auth token from cognito
+        const user = await getCurrentUser();
+        const session = await fetchAuthSession();
+        const token = session.tokens?.idToken?.toString();
+        const headers = { Authorization: token };
+        console.log(headers)
+        const [bizRes, revRes] = await Promise.all([
+          axios.get(`${BASE_URL}/business/users`, { headers }),
+          axios.get(`${BASE_URL}/reviews/users`, { headers }),
+        ]);
 
-        setEmail(DUMMY_EMAIL);
-        setBusinesses(DUMMY_BUSINESSES);
-        setReviews(DUMMY_REVIEWS);
+        setEmail(user.signInDetails?.loginId || "");
+        setBusinesses(bizRes.data || []);
+        setReviews(revRes.data || []);
       } catch {
+        // if not logged in, redirect to login page
         nav("/login");
       } finally {
         setLoading(false);
@@ -76,30 +58,24 @@ const Profile = () => {
     fetchProfile();
   }, []);
 
+  // creates a new business and adds it to the top of the list
   const handleAddBusiness = async (data: { name: string; category: string; description: string }) => {
-    // const session = await fetchAuthSession();
-    // const token = session.tokens?.idToken?.toString();
-    // const res = await axios.post(BIZ_API, data, {
-    //   headers: { Authorization: `Bearer ${token}` },
-    // });
-    // setBusinesses((prev) => [res.data, ...prev]);
-
-    const newBiz: ProfileBusiness = {
-      businessId: `biz-${Date.now()}`,
-      ...data,
-    };
-    setBusinesses((prev) => [newBiz, ...prev]);
+    const session = await fetchAuthSession();
+    const token = session.tokens?.idToken?.toString();
+    const res = await axios.post(`${BASE_URL}/business`, data, {
+      headers: { Authorization: token },
+    });
+    setBusinesses((prev) => [res.data, ...prev]);
   };
 
+  // updates an existing business and reflects the change in the list
   const handleUpdateBusiness = async (data: { name: string; category: string; description: string }) => {
     if (!editingBusiness) return;
-
-    // const session = await fetchAuthSession();
-    // const token = session.tokens?.idToken?.toString();
-    // await axios.put(`${BIZ_API}/${editingBusiness.businessId}`, data, {
-    //   headers: { Authorization: `Bearer ${token}` },
-    // });
-
+    const session = await fetchAuthSession();
+    const token = session.tokens?.idToken?.toString();
+    await axios.put(`${BASE_URL}/business/${editingBusiness.businessId}`, data, {
+      headers: { Authorization: token },
+    });
     setBusinesses((prev) =>
       prev.map((b) =>
         b.businessId === editingBusiness.businessId ? { ...b, ...data } : b
@@ -107,53 +83,56 @@ const Profile = () => {
     );
   };
 
+  // deletes a business after user confirms
   const handleDeleteBusiness = async (businessId: string) => {
     if (!confirm("Delete this business?")) return;
-
-    // const session = await fetchAuthSession();
-    // const token = session.tokens?.idToken?.toString();
-    // await axios.delete(`${BIZ_API}/${businessId}`, {
-    //   headers: { Authorization: `Bearer ${token}` },
-    // });
-
+    const session = await fetchAuthSession();
+    const token = session.tokens?.idToken?.toString();
+    await axios.delete(`${BASE_URL}/business/${businessId}`, {
+      headers: { Authorization: token },
+    });
     setBusinesses((prev) => prev.filter((b) => b.businessId !== businessId));
   };
 
+  // updates a review comment and reflects the change in the list
   const handleEditReview = async (reviewId: string, comment: string) => {
-    // const session = await fetchAuthSession();
-    // const token = session.tokens?.idToken?.toString();
-    // await axios.put(`${REV_API}/${reviewId}`, { comment }, {
-    //   headers: { Authorization: `Bearer ${token}` },
-    // });
-
+    const session = await fetchAuthSession();
+    const token = session.tokens?.idToken?.toString();
+    const review = reviews.find((r) => r.reviewId === reviewId);
+    await axios.put(`${BASE_URL}/reviews/${review?.businesId}/${reviewId}`, {
+      businessId: review?.businesId,
+      comment,
+    }, {
+      headers: { Authorization: token },
+    });
     setReviews((prev) =>
       prev.map((r) => (r.reviewId === reviewId ? { ...r, comment } : r))
     );
   };
 
+  // deletes a review after user confirms
   const handleDeleteReview = async (reviewId: string) => {
     if (!confirm("Delete this review?")) return;
-
-    // const session = await fetchAuthSession();
-    // const token = session.tokens?.idToken?.toString();
-    // await axios.delete(`${REV_API}/${reviewId}`, {
-    //   headers: { Authorization: `Bearer ${token}` },
-    // });
-
+    const session = await fetchAuthSession();
+    const token = session.tokens?.idToken?.toString();
+    const review = reviews.find((r) => r.reviewId === reviewId);
+    await axios.delete(`${BASE_URL}/reviews/${review?.businesId}/${reviewId}`, {
+      headers: { Authorization: token },
+    });
     setReviews((prev) => prev.filter((r) => r.reviewId !== reviewId));
   };
 
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-3 text-gray-400">
-        <div className="w-9 h-9 border-4 border-gray-200 border-t-green-600 rounded-full animate-spin" />
+        <div className="w-9 h-9 border-4 border-gray-200 border-t-indigo-600 rounded-full animate-spin" />
         <p className="text-sm">Loading profile...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white pb-16">
+    <div className="min-h-screen bg-[var(--bg)] pb-16">
 
       <ProfileHeader
         email={email}
@@ -164,24 +143,23 @@ const Profile = () => {
 
       <div className="border-t border-gray-100 my-4" />
 
+      {/* Tab switcher */}
       <div className="flex gap-6 px-8 mb-6">
         <button
           onClick={() => setTab("business")}
-          className={`text-base font-semibold pb-1 border-b-2 transition-colors duration-150 ${
-            tab === "business"
-              ? "text-green-600 border-green-600"
-              : "text-gray-700 border-transparent hover:text-green-500"
-          }`}
+          className={`text-base font-semibold pb-1 border-b-2 transition-colors duration-150 ${tab === "business"
+              ? "text-indigo-600 border-indigo-600"
+              : "text-gray-700 border-transparent hover:text-indigo-500"
+            }`}
         >
           Your Business
         </button>
         <button
           onClick={() => setTab("reviews")}
-          className={`text-base font-semibold pb-1 border-b-2 transition-colors duration-150 ${
-            tab === "reviews"
-              ? "text-green-600 border-green-600"
-              : "text-gray-700 border-transparent hover:text-green-500"
-          }`}
+          className={`text-base font-semibold pb-1 border-b-2 transition-colors duration-150 ${tab === "reviews"
+              ? "text-indigo-600 border-indigo-600"
+              : "text-gray-700 border-transparent hover:text-indigo-500"
+            }`}
         >
           Your Reviews
         </button>
@@ -203,6 +181,7 @@ const Profile = () => {
         />
       )}
 
+      {/* Add business modal */}
       {showAddBiz && (
         <BusinessModal
           onClose={() => setShowAddBiz(false)}
@@ -210,6 +189,7 @@ const Profile = () => {
         />
       )}
 
+      {/* Edit business modal */}
       {editingBusiness && (
         <BusinessModal
           existing={editingBusiness}
@@ -218,6 +198,7 @@ const Profile = () => {
         />
       )}
 
+      {/* Edit review modal */}
       {editingReview && (
         <EditReviewModal
           review={editingReview}

@@ -6,7 +6,7 @@ const docClient = DynamoDBDocumentClient.from(client);
 
 export const handler = async (event) => {
   // get user id from cognito token
-  const userId = event.requestContext?.authorizer?.jwt?.claims?.sub;
+const userId = event.requestContext?.authorizer?.claims?.sub;
 
   // no token, tell frontend to redirect to login
   if (!userId) {

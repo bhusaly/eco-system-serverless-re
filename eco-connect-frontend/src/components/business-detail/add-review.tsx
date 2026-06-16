@@ -34,7 +34,7 @@ const AddReview: React.FC<AddReviewProps> = ({ onSubmit }) => {
           onChange={(e) => setComment(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           className="flex-1 px-4 py-3 border border-gray-200 rounded-xl text-sm
-                     focus:outline-none focus:ring-2 focus:ring-green-400 bg-white"
+                     focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white"
         />
         <Button variant="info" className="px-6 py-3" onClick={handleSubmit}>
           {loading ? "..." : "Enter"}

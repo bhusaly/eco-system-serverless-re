@@ -15,7 +15,7 @@ interface SectionProps extends LayoutProps {
   bg?: string;
 }
 
-export const Section: React.FC<SectionProps> = ({ children, className = "", bg = "bg-white" }) => (
+export const Section: React.FC<SectionProps> = ({ children, className = "", bg = "bg-transparent" }) => (
   <section className={`py-20 md:py-32 ${bg} ${className}`}>
     {children}
   </section>

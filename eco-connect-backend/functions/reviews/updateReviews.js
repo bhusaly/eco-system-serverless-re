@@ -6,7 +6,7 @@ const dynamo = DynamoDBDocumentClient.from(client);
 
 export const handler = async (event) => {
   // get user id from cognito token
-  const userId = event.requestContext?.authorizer?.jwt?.claims?.sub;
+  const userId = event.requestContext?.authorizer?.claims?.sub;
 
   // no token, block the request
   if (!userId) {
@@ -22,15 +22,15 @@ export const handler = async (event) => {
   }
 
   try {
-    const reviewId = event.pathParameters?.id;
+    const reviewId = event.pathParameters?.reviewid;
     const body = JSON.parse(event.body);
     const { businessId, comment } = body;
 
     // fetch the review first to check who wrote it
     const existing = await dynamo.send(
       new GetCommand({
-        TableName: "Reviews",
-        Key: { businessId, reviewId },
+        TableName: "reviews",
+        Key: { businesId:businessId, reviewId },
       })
     );
 
@@ -64,8 +64,11 @@ export const handler = async (event) => {
     const result = await dynamo.send(
       new UpdateCommand({
         TableName: "reviews",
-        Key: { businessId, reviewId },
-        UpdateExpression: "set comment = :comment",
+        Key: { businesId: businessId, reviewId },  
+        UpdateExpression: "set #c = :comment",
+        ExpressionAttributeNames: {
+          "#c": "comment",  
+        },
         ExpressionAttributeValues: {
           ":comment": comment,
         },

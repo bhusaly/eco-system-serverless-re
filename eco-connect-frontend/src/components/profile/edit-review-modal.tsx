@@ -48,7 +48,7 @@ const EditReviewModal: React.FC<EditReviewModalProps> = ({
           onChange={(e) => setComment(e.target.value)}
           rows={5}
           className="w-full mb-6 px-4 py-3 border border-gray-200 rounded-xl text-sm
-                     focus:outline-none focus:ring-2 focus:ring-green-400 bg-gray-50 resize-none"
+                     focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50 resize-none"
         />
 
         <Button variant="info" className="w-full py-3 text-base" onClick={handleSubmit}>

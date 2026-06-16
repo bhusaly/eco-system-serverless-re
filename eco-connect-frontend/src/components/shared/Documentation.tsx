@@ -75,7 +75,7 @@ const DocSection: React.FC<{
 
 export const DocumentationPortal: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white pb-20 selection:bg-indigo-100">
+    <div className="min-h-screen bg-[var(--bg)] pb-20 selection:bg-indigo-100">
       
      <Container className="mt-20">
         <header className="mb-24">
@@ -104,7 +104,7 @@ export const DocumentationPortal: React.FC = () => {
           propsList={[
             { name: 'children', type: 'ReactNode', default: 'null', desc: 'Inner content of the layout' },
             { name: 'className', type: 'string', default: '""', desc: 'Custom CSS classes' },
-            { name: 'bg', type: 'string', default: '"bg-white"', desc: 'Tailwind background color class (Section only)' },
+            { name: 'bg', type: 'string', default: '"bg-transparent"', desc: 'Tailwind background color class (Section only)' },
           ]}
           code={`<Section bg="bg-slate-50">\n  <Container>\n    <Text>Layout logic starts here.</Text>\n  </Container>\n</Section>`}
         >

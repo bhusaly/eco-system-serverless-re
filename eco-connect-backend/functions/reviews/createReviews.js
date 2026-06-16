@@ -6,7 +6,7 @@ const dynamo = DynamoDBDocumentClient.from(client);
 
 export const handler = async (event) => {
   // get user id from cognito token
-  const userId = event.requestContext?.authorizer?.jwt?.claims?.sub;
+  const userId = event.requestContext?.authorizer?.claims?.sub;
 
   // no token, block the request
   if (!userId) {
@@ -23,14 +23,16 @@ export const handler = async (event) => {
 
   try {
     const body = JSON.parse(event.body);
-    const { businessId, rating, comment } = body;
-
-    // build the review item with the logged in user's id as the author
+    const {  comment } = body;
+    const businessId = event.pathParameters?.id;
+    const userId = event.requestContext?.authorizer?.claims?.sub;
+    const userEmail = event.requestContext?.authorizer?.claims?.email;
+    
     const review = {
       reviewId: Date.now().toString(),
-      businessId,
+      businesId: businessId,  
       userId,
-      rating,
+      userEmail,  
       comment,
     };
 

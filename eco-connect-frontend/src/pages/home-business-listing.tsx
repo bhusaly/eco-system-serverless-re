@@ -4,7 +4,7 @@ import HeroSection from "../components/home-business-listing/hero";
 
 const Home = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[var(--bg)]">
       {/* importing components */}
       <HeroSection />
       <BusinessListing />

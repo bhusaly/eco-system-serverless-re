@@ -5,9 +5,9 @@ import { Button } from './Button';
 
 export const CenteredHero: React.FC = () => {
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden bg-slate-50">
+    <section className="relative pt-32 pb-20 overflow-hidden bg-[var(--bg)]">
       {/* Decorative Background Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-indigo-100/50 blur-[120px] rounded-full -z-10" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-indigo-100/60 blur-[120px] rounded-full -z-10" />
       
       <Container>
         <div className="text-center max-w-3xl mx-auto">
